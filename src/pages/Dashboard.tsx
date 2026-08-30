@@ -12,8 +12,8 @@ import { daysUntil, formatDateBR, monthKey, monthLabel, todayISO } from '../lib/
 const anim = import.meta.env.MODE !== 'capture'
 
 export default function Dashboard() {
-  const [mostrarRecebido, setMostrarRecebido] = useState(true)
-  const [mostrarAReceber, setMostrarAReceber] = useState(true)
+  const [mostrarRecebido, setMostrarRecebido] = useState(false)
+  const [mostrarAReceber, setMostrarAReceber] = useState(false)
   const { db, clienteById, valorPago, faturaStatusEfetivo } = useData()
 
   const mesAtual = monthKey(todayISO())
