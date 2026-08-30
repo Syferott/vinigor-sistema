@@ -194,6 +194,7 @@ export default function Dashboard() {
   </button>
 </div>
 <div className="relative">
+  <div className="relative">
   <KpiCard
     label="A pagar"
     value={mostrarAPagar ? formatCents(stats.aPagar) : 'R$ ••••••'}
@@ -201,6 +202,21 @@ export default function Dashboard() {
     tone="warn"
     to="/contas-pagar"
   />
+
+  <button
+    type="button"
+    onClick={(e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      setMostrarAPagar((v) => !v)
+    }}
+    className="absolute right-3 top-3 z-10 rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+    title={mostrarAPagar ? 'Ocultar valor' : 'Mostrar valor'}
+    aria-label={mostrarAPagar ? 'Ocultar valor' : 'Mostrar valor'}
+  >
+    {mostrarAPagar ? '👁️' : '🙈'}
+  </button>
+</div>
 
   <button
     type="button"
