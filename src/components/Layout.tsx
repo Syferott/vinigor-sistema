@@ -67,7 +67,7 @@ export default function Layout() {
             {db.empresa.nome || 'Gráfica Livre'}
           </h1>
           <p className="mt-0.5 text-xs text-slate-400">
-            Gestão para gráficas
+            Sistema de Gestão 1.0
           </p>
         </div>
 
