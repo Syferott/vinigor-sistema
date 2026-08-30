@@ -45,7 +45,7 @@ if (vfs) {
 }
 
 // Paleta do template (definida pelo cliente)
-const AZUL = '#3B90EC' // azul de destaque (título, cabeçalho da tabela, total, PIX)
+const AZUL = '#66FF33' // azul de destaque (título, cabeçalho da tabela, total, PIX)
 const CINZA = '#595959' // cinza (mais escuro) dos textos secundários (CNPJ, datas, rótulos)
 const PRETO = '#000000' // texto principal
 
