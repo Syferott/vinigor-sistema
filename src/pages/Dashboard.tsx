@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import {
   Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis,
@@ -12,6 +12,7 @@ import { daysUntil, formatDateBR, monthKey, monthLabel, todayISO } from '../lib/
 const anim = import.meta.env.MODE !== 'capture'
 
 export default function Dashboard() {
+  const [mostrarRecebido, setMostrarRecebido] = useState(true)
   const { db, clienteById, valorPago, faturaStatusEfetivo } = useData()
 
   const mesAtual = monthKey(todayISO())
@@ -126,12 +127,28 @@ export default function Dashboard() {
           hint={formatCents(stats.orcamentosMesValor)}
           to="/orcamentos"
         />
-        <KpiCard
-          label="Recebido no mês"
-          value={formatCents(stats.recebidoMes)}
-          tone="good"
-          to="/faturas"
-        />
+         <div className="relative">
+          <KpiCard
+            label="Recebido no mês"
+            value={mostrarRecebido ? formatCents(stats.recebidoMes) : 'R$ ••••••'}
+            tone="good"
+            to="/faturas"
+          />
+
+          <button
+            type="button"
+            onClick={(e) => {
+              e.preventDefault()
+              e.stopPropagation()
+              setMostrarRecebido((v) => !v)
+            }}
+            className="absolute right-3 top-3 z-10 rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+            title={mostrarRecebido ? 'Ocultar valor' : 'Mostrar valor'}
+            aria-label={mostrarRecebido ? 'Ocultar valor' : 'Mostrar valor'}
+          >
+            {mostrarRecebido ? '👁️' : '🙈'}
+          </button>
+        </div>
         <KpiCard
           label="A receber"
           value={formatCents(stats.aReceber)}
