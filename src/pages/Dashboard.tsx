@@ -13,6 +13,7 @@ const anim = import.meta.env.MODE !== 'capture'
 
 export default function Dashboard() {
   const [mostrarRecebido, setMostrarRecebido] = useState(true)
+  const [mostrarAReceber, setMostrarAReceber] = useState(true)
   const { db, clienteById, valorPago, faturaStatusEfetivo } = useData()
 
   const mesAtual = monthKey(todayISO())
@@ -149,17 +150,48 @@ export default function Dashboard() {
             {mostrarRecebido ? '👁️' : '🙈'}
           </button>
         </div>
-        <KpiCard
-          label="A receber"
-          value={formatCents(stats.aReceber)}
-          hint={
-            stats.vencidasReceber > 0
-              ? `${formatCents(stats.vencidasReceber)} vencido`
-              : `${stats.faturasAbertasQtd} fatura(s) em aberto`
-          }
-          tone={stats.vencidasReceber > 0 ? 'bad' : 'default'}
-          to="/contas-receber"
-        />
+<div className="relative">
+<div className="relative">
+  <KpiCard
+    label="A receber"
+    value={mostrarAReceber ? formatCents(stats.aReceber) : 'R$ ••••••'}
+    hint={
+      stats.vencidasReceber > 0
+        ? `${formatCents(stats.vencidasReceber)} vencido`
+        : `${stats.faturasAbertasQtd} fatura(s) em aberto`
+    }
+    tone={stats.vencidasReceber > 0 ? 'bad' : 'default'}
+    to="/contas-receber"
+  />
+
+  <button
+    type="button"
+    onClick={(e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      setMostrarAReceber((v) => !v)
+    }}
+    className="absolute right-3 top-3 z-10 rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+    title={mostrarAReceber ? 'Ocultar valor' : 'Mostrar valor'}
+    aria-label={mostrarAReceber ? 'Ocultar valor' : 'Mostrar valor'}
+  >
+    {mostrarAReceber ? '👁️' : '🙈'}
+  </button>
+</div>
+  <button
+    type="button"
+    onClick={(e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      setMostrarAReceber((v) => !v)
+    }}
+    className="absolute right-3 top-3 z-10 rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+    title={mostrarAReceber ? 'Ocultar valor' : 'Mostrar valor'}
+    aria-label={mostrarAReceber ? 'Ocultar valor' : 'Mostrar valor'}
+  >
+    {mostrarAReceber ? '👁️' : '🙈'}
+  </button>
+</div>
         <KpiCard
           label="A pagar"
           value={formatCents(stats.aPagar)}
