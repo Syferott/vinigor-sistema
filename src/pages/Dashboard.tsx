@@ -19,7 +19,7 @@ export default function Dashboard() {
   const solicitarSenha = () => {
     const senha = window.prompt('Digite a senha para visualizar os valores:')
 
-    if (senha === '239889') {
+    if (senha === '2698') {
       return true
     }
 
