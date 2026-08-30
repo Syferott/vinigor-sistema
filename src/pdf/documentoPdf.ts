@@ -59,19 +59,17 @@ const FORMA_LABELS: Record<string, string> = {
 }
 
 function cabecalho(empresa: Empresa, titulo: string, numero: string): Content {
-  // Coluna da esquerda: logo em cima e, abaixo dela, os dados da empresa.
-  // O nome fica no mesmo tamanho do restante dos dados (só em negrito).
-  const esquerda: Content = {
+  const dadosEmpresa: Content = {
     stack: [
-      ...(empresa.logoDataUrl
-        ? [{ image: empresa.logoDataUrl, fit: [130, 60] as [number, number], margin: [0, 0, 0, 6] as [number, number, number, number] }]
+      { text: empresa.nome, bold: true, fontSize: 10 },
+      ...(empresa.cnpj
+        ? [{ text: `CNPJ: ${empresa.cnpj}`, color: CINZA, fontSize: 8 }]
         : []),
-      { text: empresa.nome, bold: true },
-      ...(empresa.cnpj ? [{ text: `CNPJ: ${empresa.cnpj}`, color: CINZA }] : []),
       ...(empresa.endereco
         ? [{
             text: `${empresa.endereco}${empresa.bairro ? ', ' + empresa.bairro : ''} — ${empresa.cidade}/${empresa.estado} ${empresa.cep}`,
             color: CINZA,
+            fontSize: 8,
           }]
         : []),
       {
@@ -79,21 +77,53 @@ function cabecalho(empresa: Empresa, titulo: string, numero: string): Content {
           .filter(Boolean)
           .join('  •  '),
         color: CINZA,
+        fontSize: 8,
       },
     ],
-    fontSize: 9,
+    margin: [8, 2, 0, 0],
   }
 
   const tituloBloco: Content = {
     stack: [
-      { text: titulo, fontSize: 20, bold: true, color: AZUL, alignment: 'right' },
-      { text: numero, fontSize: 12, alignment: 'right', color: CINZA },
+      {
+        text: titulo,
+        fontSize: 20,
+        bold: true,
+        color: AZUL,
+        alignment: 'right',
+      },
+      {
+        text: numero,
+        fontSize: 12,
+        alignment: 'right',
+        color: CINZA,
+      },
     ],
   }
 
   return {
-    columns: [esquerda, tituloBloco],
-    columnGap: 14,
+    columns: [
+      {
+        columns: [
+          ...(empresa.logoDataUrl
+            ? [
+                {
+                  image: empresa.logoDataUrl,
+                  fit: [110, 55] as [number, number],
+                },
+              ]
+            : []),
+          dadosEmpresa,
+        ],
+        columnGap: 8,
+        width: '*',
+      },
+      {
+        ...tituloBloco,
+        width: 110,
+      },
+    ],
+    columnGap: 12,
     margin: [0, 0, 0, 16],
   }
 }
