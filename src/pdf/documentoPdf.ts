@@ -356,7 +356,7 @@ function faturaDocDef(
         : []),
       ...blocoTexto('Observações', fatura.observacoes),
       ...blocoTexto('Condições de Pagamento', fatura.condicoesPagamento),
-      rodape(`${empresa.nome} — documento comercial sem valor fiscal.`),
+      rodape(`${empresa.nome} — Documento comercial.`),
     ],
   }
   return docDef
@@ -538,7 +538,7 @@ function guiaRemessaDocDef(
       tabelaItensRemessa(fatura),
       ...blocoTexto('Observações', fatura.observacoes),
       blocoRecebimento(),
-      rodape(`${empresa.nome} — guia de remessa sem valor fiscal.`),
+      rodape(`${empresa.nome} — Guia de remessa.`),
     ],
   }
 }
