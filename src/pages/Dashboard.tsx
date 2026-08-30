@@ -14,6 +14,7 @@ const anim = import.meta.env.MODE !== 'capture'
 export default function Dashboard() {
   const [mostrarRecebido, setMostrarRecebido] = useState(false)
   const [mostrarAReceber, setMostrarAReceber] = useState(false)
+  const [mostrarAPagar, setMostrarAPagar] = useState(false)
   const { db, clienteById, valorPago, faturaStatusEfetivo } = useData()
 
   const mesAtual = monthKey(todayISO())
@@ -192,14 +193,29 @@ export default function Dashboard() {
     {mostrarAReceber ? '👁️' : '🙈'}
   </button>
 </div>
-        <KpiCard
-          label="A pagar"
-          value={formatCents(stats.aPagar)}
-          hint={`Despesas pagas no mês: ${formatCents(stats.pagoMes)}`}
-          tone="warn"
-          to="/contas-pagar"
-        />
-      </div>
+<div className="relative">
+  <KpiCard
+    label="A pagar"
+    value={mostrarAPagar ? formatCents(stats.aPagar) : 'R$ ••••••'}
+    hint={`Despesas pagas no mês: ${mostrarAPagar ? formatCents(stats.pagoMes) : 'R$ ••••••'}`}
+    tone="warn"
+    to="/contas-pagar"
+  />
+
+  <button
+    type="button"
+    onClick={(e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      setMostrarAPagar((v) => !v)
+    }}
+    className="absolute right-3 top-3 z-10 rounded-md p-1.5 text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+    title={mostrarAPagar ? 'Ocultar valor' : 'Mostrar valor'}
+    aria-label={mostrarAPagar ? 'Ocultar valor' : 'Mostrar valor'}
+  >
+    {mostrarAPagar ? '👁️' : '🙈'}
+  </button>
+</div>
 
       <div className="mt-5 grid grid-cols-1 gap-4 xl:grid-cols-3">
         <Card className="xl:col-span-2">
