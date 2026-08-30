@@ -59,7 +59,7 @@ const FORMA_LABELS: Record<string, string> = {
 }
 
 function cabecalho(empresa: Empresa, titulo: string, numero: string): Content {
-  const dadosEmpresa: Content = {
+  const dadosEmpresa = {
     stack: [
       { text: empresa.nome, bold: true, fontSize: 10 },
       ...(empresa.cnpj
@@ -80,50 +80,58 @@ function cabecalho(empresa: Empresa, titulo: string, numero: string): Content {
         fontSize: 8,
       },
     ],
-    margin: [8, 2, 0, 0],
+    margin: [3, 2, 0, 0] as [number, number, number, number],
   }
 
-  const tituloBloco: Content = {
+  const tituloBloco = {
     stack: [
       {
         text: titulo,
-        fontSize: 20,
+        fontSize: 17,
         bold: true,
         color: AZUL,
-        alignment: 'right',
+        alignment: 'right' as const,
+        noWrap: true,
       },
       {
         text: numero,
-        fontSize: 12,
-        alignment: 'right',
+        fontSize: 11,
+        alignment: 'right' as const,
         color: CINZA,
       },
     ],
   }
 
   return {
-    columns: [
-      {
-        columns: [
-          ...(empresa.logoDataUrl
-            ? [
-                {
-                  image: empresa.logoDataUrl,
-                  fit: [110, 55] as [number, number],
-                },
-              ]
-            : []),
-          dadosEmpresa,
+    table: {
+      widths: [85, '*', 125],
+      body: [
+        [
+          empresa.logoDataUrl
+            ? {
+                image: empresa.logoDataUrl,
+                fit: [80, 45] as [number, number],
+                alignment: 'left' as const,
+                border: [false, false, false, false],
+              }
+            : {
+                text: '',
+                border: [false, false, false, false],
+              },
+
+          {
+            ...dadosEmpresa,
+            border: [false, false, false, false],
+          },
+
+          {
+            ...tituloBloco,
+            border: [false, false, false, false],
+          },
         ],
-        columnGap: 8,
-        width: '*',
-      },
-      {
-        ...tituloBloco,
-        width: 110,
-      },
-    ],
-    columnGap: 12,
+      ],
+    },
+    layout: 'noBorders',
     margin: [0, 0, 0, 16],
   }
 }
